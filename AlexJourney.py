@@ -14,16 +14,21 @@ def string_identifier(item: str):
 
 
 def float_identifier(item: str):
-    if item[0] in [str(i) for i in range(10)] and "." in item:
+    if (item[0] in [str(i) for i in range(10)] or item[0] == '-') and "." in item:
         return True
 
 
 def integer_identifier(item: str):
-    if item[0] in [str(i) for i in range(10)] and not (float_identifier(item)):
+    if item[0] in [str(i) for i in range(10)] or item[0] == '-' and not (float_identifier(item)):
         return True
 
 
-functions_lst = [string_identifier, float_identifier,
+def bool_identifier(item: str):
+    if item in ["True", "False"]:
+        return True
+    
+
+functions_lst = [bool_identifier, string_identifier, float_identifier,
                  integer_identifier, list_identifier, dict_identifier]
 
 
@@ -32,23 +37,34 @@ def item_type(item: str):
         t = i(item)
         if t:
             t = str(i)
-            return t[10:t.index("_"):]
+            return t[10: t.index("_"): ]
+
 
 
 def result_item(item: str):
     t = item_type(item)
+    if t == "bool":
+        if item == "True":
+            return True
+        else:
+            return False
+
     if t == "string":
-        return item[1:-1:]
+        return item[1:-1:]   # returns None if item is a empty string
+    
     if t == "float":
         return float(item)
+    
     if t == "integer":
         return int(item)
+    
     if t == "list":
         item = item.replace(" ", "")
         if len(item[1:-1]):
             result = item[1:-1].split(",")
             return [result_item(i) for i in result]
         return []
+    
     if t == "dict":
         d = {}
         item = item[1:-1].replace(" ", "")
@@ -63,6 +79,7 @@ def result_item(item: str):
             key , value = result_item(key) , result_item(value)
 
             d[key] = value
+
         return d
 
         
