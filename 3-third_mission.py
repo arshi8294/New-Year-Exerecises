@@ -72,13 +72,18 @@ def check_pass(users_list):
 # -----------------------------------------------------------------------------------------------
 
 
-print(calculate_magic_numbers(1, 100))
-
+return_third_mission_1 = calculate_magic_numbers(1, 100)
 
 threading.Thread(target=exam_numbers, daemon=True).start()
-print(timer())
+return_third_mission_2 = timer()
 
 lst = [("ali", "Ali12*2333"), ('babak', 'Aswer&&&'), ('cyrus', "hassan#2@"),
        ('reza', "HAAAAA!@#"), ('dariush', "Asgh@"), ("farsad", "Hsn23@far")]
-check = check_pass(lst)
-print(check)
+return_third_mission_3 = check_pass(lst)
+
+
+if __name__=="__main__":
+    print(return_third_mission_1)
+    print(return_third_mission_2)
+    print(return_third_mission_3)
+
