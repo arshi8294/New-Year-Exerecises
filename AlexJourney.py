@@ -1,6 +1,21 @@
+#todo : make exam_numbers() more efficient
+import threading
 import random
 import time
 import string
+
+
+def calculate_magic_numbers(start, end):
+    result = [random.randint(start, end) for i in range(random.randint(1, 10))]
+    return result
+# print(calculate_magic_numbers(1, 100))
+
+#----------------------------------------------------------------------------------------------
+
+def timer(secs: int = 6):
+    for i in range(secs):
+        time.sleep(1)
+    return "\nnumber of true answers: {} \nnumber of wrong answers: {}".format(corrects, mistakes)
 
 
 def binary(decimal):
@@ -18,17 +33,13 @@ def binary(decimal):
     return result
 
 
-def calculate_magic_numbers(start, end):
-    result = [random.randint(start, end) for i in range(10)]
-    return result
-# print(calculate_magic_numbers(1, 100))
-
-
 def exam_numbers():
+    global corrects
     corrects = 0
-    mistakes = 0
-    start = time.time()
-    while time.time() - start < 20:
+    global mistakes
+    mistakes = 0 
+    
+    while True:
         decimal = random.randint(0, 15)
         result = binary(decimal)
         userInput = ""
@@ -40,10 +51,12 @@ def exam_numbers():
             corrects += 1
         else:
             mistakes += 1
-    return f"{corrects} corrects \n{mistakes} wrongs"
 
 
-# print(exam_numbers())
+threading.Thread(target=exam_numbers, daemon=True).start()
+print(timer())
+
+#----------------------------------------------------------------------
 
 def check_pass(users_list):
     result = []
@@ -57,7 +70,8 @@ def check_pass(users_list):
             result.append(i[0])
     return result
 
-# lst = [("a" , "Ali12*2333") , ('b', 'Aswer&&&') , ('c', "hassan#2@"), ('re',"HAAAAA!@#"), ('e' , "Asgh@")]
+# lst = [("ali" , "Ali12*2333") , ('babak', 'Aswer&&&') , ('cyrus', "hassan#2@"),
+#         ('reza',"HAAAAA!@#"), ('dariush' , "Asgh@"), ("farsad", "Hsn23@far")]
 # check = check_pass(lst)
 # print(check)
             
