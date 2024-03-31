@@ -1,4 +1,3 @@
-#todo : make exam_numbers() more efficient
 import threading
 import random
 import time
@@ -8,14 +7,14 @@ import string
 def calculate_magic_numbers(start, end):
     result = [random.randint(start, end) for i in range(random.randint(1, 10))]
     return result
-# print(calculate_magic_numbers(1, 100))
+
 
 #----------------------------------------------------------------------------------------------
 
-def timer(secs: int = 6):
+def timer(secs: int = 20):
     for i in range(secs):
         time.sleep(1)
-    return "\nnumber of true answers: {} \nnumber of wrong answers: {}".format(corrects, mistakes)
+    return "\nnumber of correct answers: {} \nnumber of wrong answers: {}".format(corrects, mistakes)
 
 
 def binary(decimal):
@@ -34,8 +33,11 @@ def binary(decimal):
 
 
 def exam_numbers():
+    
+    # corrects and mistakes are globalized to be used in timer function to show result of exam numbers 
+    # because this function's thread will be terminated after executing main function
     global corrects
-    corrects = 0
+    corrects = 0  
     global mistakes
     mistakes = 0 
     
@@ -53,8 +55,6 @@ def exam_numbers():
             mistakes += 1
 
 
-threading.Thread(target=exam_numbers, daemon=True).start()
-print(timer())
 
 #----------------------------------------------------------------------
 
@@ -70,8 +70,15 @@ def check_pass(users_list):
             result.append(i[0])
     return result
 
-# lst = [("ali" , "Ali12*2333") , ('babak', 'Aswer&&&') , ('cyrus', "hassan#2@"),
-#         ('reza',"HAAAAA!@#"), ('dariush' , "Asgh@"), ("farsad", "Hsn23@far")]
-# check = check_pass(lst)
-# print(check)
-            
+#-----------------------------------------------------------------------------------------------
+
+print(calculate_magic_numbers(1, 100))
+
+
+threading.Thread(target=exam_numbers, daemon=True).start()
+print(timer())
+
+lst = [("ali" , "Ali12*2333") , ('babak', 'Aswer&&&') , ('cyrus', "hassan#2@"),
+        ('reza',"HAAAAA!@#"), ('dariush' , "Asgh@"), ("farsad", "Hsn23@far")]
+check = check_pass(lst)
+print(check)
