@@ -26,7 +26,7 @@ def integer_identifier(item: str):
 def bool_identifier(item: str):
     if item in ["True", "False"]:
         return True
-    
+
 
 functions_lst = [bool_identifier, string_identifier, float_identifier,
                  integer_identifier, list_identifier, dict_identifier]
@@ -37,8 +37,7 @@ def item_type(item: str):
         t = i(item)
         if t:
             t = str(i)
-            return t[10: t.index("_"): ]
-
+            return t[10: t.index("_"):]
 
 
 def result_item(item: str):
@@ -51,38 +50,38 @@ def result_item(item: str):
 
     if t == "string":
         return item[1:-1:]   # returns None if item is a empty string
-    
+
     if t == "float":
         return float(item)
-    
+
     if t == "integer":
         return int(item)
-    
+
     if t == "list":
         item = item.replace(" ", "")
         if len(item[1:-1]):
             result = item[1:-1].split(",")
             return [result_item(i) for i in result]
         return []
-    
+
     if t == "dict":
         d = {}
         item = item[1:-1].replace(" ", "")
-        if not(len(item)):
+        if not (len(item)):
             return d
-    
+
         item = item.split(",")
         for i in range(len(item)):
             item[i] = item[i].split(":")
-            
-            key , value = item[i]
-            key , value = result_item(key) , result_item(value)
+
+            key, value = item[i]
+            key, value = result_item(key), result_item(value)
 
             d[key] = value
 
         return d
 
-        
+
 def solve_puzzles(puzzles):
 
     text = puzzles.read()
@@ -94,9 +93,7 @@ def solve_puzzles(puzzles):
     return truthiness_lst
 
 
-print(solve_puzzles(puzzles = open("puzzles.txt", "r")))
+return_second_mission = solve_puzzles(puzzles = open("puzzles.txt", "r"))
 
-
-
-
-
+if __name__ == "__main__":
+    print(return_second_mission)
